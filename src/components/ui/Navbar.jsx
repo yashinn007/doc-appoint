@@ -4,6 +4,7 @@ import { Link, Button } from "@heroui/react";
 import NavLinks from "./NavLinks";
 import Image from "next/image";
 import logo from "@/assets/logo.png";
+import { ThemeToggol } from "./ThemeToggol";
 
 export default function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -62,16 +63,20 @@ export default function Navbar() {
               alt="Logo"
               height={300}
               width={300}
+              loading="eager"
               className="w-36 md:w-48 h-auto"
             ></Image>
           </div>
         </div>
         <ul className="hidden items-center gap-4 md:flex">{links}</ul>
-        <div className="space-x-2">
-          <Link href="#">Login</Link>
-          <Button size="sm" className="bg-[#069c6e]">
-            Sign Up
-          </Button>
+        <div className="space-x-3 flex justify-center items-center">
+          <ThemeToggol></ThemeToggol>
+          <div className="space-x-2 ">
+            <Link href="#">Login</Link>
+            <Button size="sm" className="bg-[#069c6e]">
+              Sign Up
+            </Button>
+          </div>
         </div>
       </header>
       {isMenuOpen && (
