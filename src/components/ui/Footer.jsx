@@ -5,7 +5,7 @@ import { LuFacebook, LuInstagram, LuLinkedin, LuTwitter } from "react-icons/lu";
 
 const Footer = () => {
   return (
-    <div className="container mx-auto bg-[#eefaf8] grid grid-cols-2 md:grid-cols-4 py-12 px-3 md:px-0">
+    <footer className="container mx-auto bg-[#eefaf8] dark:bg-[#01251b] grid grid-cols-2 md:grid-cols-4 py-12 px-3 md:px-0">
       <div className="col-span-2 mb-5 md:mb-0 md:pl-5 lg:pl-25">
         <Image
           src={logo}
@@ -31,21 +31,21 @@ const Footer = () => {
       <div className="">
         <h4 className="text-xl text-gray-700 font-medium">Follow Us</h4>
         <div className="flex gap-3 mt-3 flex-wrap ">
-          <span className="p-4 border border-[#5ddda9] rounded-lg bg-[#eefaf8]">
+          <span className="p-4 border border-[#5ddda9] rounded-lg ">
             <LuFacebook className="text-[#5ddda9]" />{" "}
           </span>
-          <span className="p-4 border border-[#5ddda9] rounded-lg bg-[#eefaf8]">
+          <span className="p-4 border border-[#5ddda9] rounded-lg ">
             <LuInstagram className="text-[#5ddda9]" />
           </span>
-          <span className="p-4 border border-[#5ddda9] rounded-lg bg-[#eefaf8]">
+          <span className="p-4 border border-[#5ddda9] rounded-lg ">
             <LuTwitter className="text-[#5ddda9]" />
           </span>
-          <span className="p-4 border border-[#5ddda9] rounded-lg bg-[#eefaf8]">
+          <span className="p-4 border border-[#5ddda9] rounded-lg">
             <LuLinkedin className="text-[#5ddda9]" />
           </span>
         </div>
       </div>
-    </div>
+    </footer>
   );
 };
 
