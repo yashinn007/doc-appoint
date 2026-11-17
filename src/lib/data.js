@@ -15,3 +15,10 @@ export const getSingleAppointmentData = async (id) => {
   const data = await res.json();
   return data;
 };
+
+export const getBookingData = async () => {
+  "use cache";
+  const res = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/booking`);
+  const data = await res.json();
+  return data;
+};

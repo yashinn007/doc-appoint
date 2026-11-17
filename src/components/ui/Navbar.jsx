@@ -23,7 +23,7 @@ export default function Navbar() {
         <NavLinks href={"/all-appointment"}>All Appointment</NavLinks>
       </li>
       <li>
-        <NavLinks href={"/dashboard"}>Dashboard</NavLinks>
+        <NavLinks href={"/dashboard/bookings"}>Dashboard</NavLinks>
       </li>
     </>
   );

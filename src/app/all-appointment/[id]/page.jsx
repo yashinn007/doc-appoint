@@ -1,7 +1,6 @@
 import { BookModal } from "@/components/AppointmentDetailsPage/BookModal";
 import { getSingleAppointmentData } from "@/lib/data";
 import Image from "next/image";
-import Link from "next/link";
 import React from "react";
 import {
   FaRegClock,
@@ -68,6 +67,7 @@ const AppointmentDetailPage = async ({ params }) => {
               alt={name}
               fill
               priority
+              loading="eager"
               sizes="(max-width: 768px) 100vw, 33vw"
               className="rounded-2xl object-cover"
             />

@@ -1,7 +1,8 @@
 "use client";
 
+import { revalidateBooking } from "@/lib/actions";
 import { authClient } from "@/lib/auth-client";
-import { Clock, Envelope } from "@gravity-ui/icons";
+import { Clock } from "@gravity-ui/icons";
 import {
   Button,
   Calendar,
@@ -16,7 +17,6 @@ import {
   TimeField,
   Select,
 } from "@heroui/react";
-import { useState } from "react";
 import toast from "react-hot-toast";
 
 export function BookModal({ doctor }) {
@@ -48,7 +48,6 @@ export function BookModal({ doctor }) {
 
     // Add userId
     bookingData.userId = user?.id;
-    console.log(bookingData);
 
     //post data to the server
     const res = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/booking`, {
@@ -59,6 +58,8 @@ export function BookModal({ doctor }) {
       body: JSON.stringify(bookingData),
     });
     const data = await res.json();
+
+    await revalidateBooking();
 
     toast.success("You booked successfully");
   };
@@ -160,7 +161,7 @@ export function BookModal({ doctor }) {
                       variant="secondary"
                     >
                       <Label>Phone</Label>
-                      <Input placeholder="Enter your phone number" />
+                      <Input placeholder="01XXXXXXXXX" />
                     </TextField>
                     {/* date */}
                     <DateField isRequired name="date" variant="secondary">
