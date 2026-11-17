@@ -1,3 +1,4 @@
+import { BookModal } from "@/components/AppointmentDetailsPage/BookModal";
 import { getSingleAppointmentData } from "@/lib/data";
 import Image from "next/image";
 import Link from "next/link";
@@ -57,11 +58,11 @@ const AppointmentDetailPage = async ({ params }) => {
   ];
 
   return (
-    <div className="container mx-auto px-4 sm:px-6 lg:px-0 py-10 lg:py-16">
+    <div className="container mx-auto px-3 sm:px-4 lg:px-0 py-10 lg:py-16">
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8">
         {/* Doctor Image */}
         <div className="w-full">
-          <div className="relative h-[350px] sm:h-[450px] md:h-[500px] w-full">
+          <div className="relative h-87.5 sm:h-112.5 md:h-125 w-full">
             <Image
               src={image}
               alt={name}
@@ -137,12 +138,7 @@ const AppointmentDetailPage = async ({ params }) => {
 
           {/* Appointment Button */}
           <div className="mt-7">
-            <Link
-              href={`/booking/${_id}`}
-              className="inline-flex items-center justify-center px-7 py-3 rounded-lg bg-[#069c6e] hover:bg-[#047f5a] text-white font-semibold transition duration-300"
-            >
-              Book Appointment
-            </Link>
+            <BookModal doctor={doctor}></BookModal>
           </div>
         </div>
       </div>

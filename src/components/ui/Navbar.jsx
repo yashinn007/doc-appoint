@@ -1,13 +1,18 @@
 "use client";
 import { useState } from "react";
-import { Link, Button } from "@heroui/react";
+import { Link, Button, Spinner } from "@heroui/react";
 import NavLinks from "./NavLinks";
 import Image from "next/image";
 import logo from "@/assets/logo.png";
 import { ThemeToggol } from "./ThemeToggol";
+import { DropdownProfile } from "./DropdownProfile";
+import { authClient } from "@/lib/auth-client";
 
 export default function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+
+  const { data: session, isPending } = authClient.useSession();
+  const user = session?.user;
 
   const links = (
     <>
@@ -71,11 +76,25 @@ export default function Navbar() {
         <ul className="hidden items-center gap-4 md:flex">{links}</ul>
         <div className="space-x-3 flex justify-center items-center">
           <ThemeToggol></ThemeToggol>
-          <div className="space-x-2 ">
-            <Link href="#">Login</Link>
-            <Button size="sm" className="bg-[#069c6e]">
-              Sign Up
-            </Button>
+          {/* container */}
+          <div className="flex gap-2 items-center">
+            {/* buttons */}
+            {isPending ? (
+              <>
+                <Spinner color="success" className="mr-2" />
+              </>
+            ) : !user ? (
+              <div className="space-x-2 ">
+                <Link href="/login">Login</Link>
+                <Link href="/signup">
+                  <Button size="sm" className="bg-[#069c6e]">
+                    Sign Up
+                  </Button>
+                </Link>
+              </div>
+            ) : (
+              <DropdownProfile user={user}></DropdownProfile>
+            )}
           </div>
         </div>
       </header>

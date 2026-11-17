@@ -5,7 +5,7 @@ import { LuFacebook, LuInstagram, LuLinkedin, LuTwitter } from "react-icons/lu";
 
 const Footer = () => {
   return (
-    <footer className="container mx-auto bg-[#eefaf8] dark:bg-[#01251b] grid grid-cols-2 md:grid-cols-4 py-12 px-3 md:px-0">
+    <footer className="container mx-auto bg-[#ddf7f2] dark:bg-[#01251b] grid grid-cols-2 md:grid-cols-4 py-12 px-3 md:px-0">
       <div className="col-span-2 mb-5 md:mb-0 md:pl-5 lg:pl-25">
         <Image
           src={logo}

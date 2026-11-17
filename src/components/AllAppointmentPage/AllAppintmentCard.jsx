@@ -32,7 +32,9 @@ const AllAppintmentCard = ({ doctor }) => {
           </span>
         </div>
         <div className="px-3">
-          <h2 className="text-gray-900 text-xl font-semibold ">{name}</h2>
+          <h2 className="text-black dark:text-white text-xl font-semibold ">
+            {name}
+          </h2>
           <h2 className="text-[#069c6e] font-semibold ">{specialty}</h2>
           <p className="text-gray-500 line-clamp-1 text-sm mt-1">
             {description}
