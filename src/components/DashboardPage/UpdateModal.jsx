@@ -74,7 +74,7 @@ export function UpdateModal({ booking }) {
                     name="doctorName"
                     type="text"
                     variant="secondary"
-                    value={booking.doctorName}
+                    value={booking?.doctorName}
                   >
                     <Label>Doctor</Label>
                     <Input placeholder="Doctor name" readOnly />
@@ -82,6 +82,7 @@ export function UpdateModal({ booking }) {
                   {/* enter patiant name */}
                   <TextField
                     isRequired
+                    defaultValue={booking?.patientName ?? ""}
                     className="w-full"
                     name="patientName"
                     type="text"
