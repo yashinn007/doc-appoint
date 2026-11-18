@@ -1,5 +1,7 @@
 import { BookModal } from "@/components/AppointmentDetailsPage/BookModal";
+import { auth } from "@/lib/auth";
 import { getSingleAppointmentData } from "@/lib/data";
+import { headers } from "next/headers";
 import Image from "next/image";
 import React from "react";
 import {
@@ -13,7 +15,13 @@ import {
 const AppointmentDetailPage = async ({ params }) => {
   const { id } = await params;
 
-  const doctor = await getSingleAppointmentData(id);
+  //get jwt token in (server component)
+  const { token } = await auth.api.getToken({
+    headers: await headers(),
+  });
+  //console.log("token:", token);
+
+  const doctor = await getSingleAppointmentData(id, token);
 
   if (!doctor) {
     return <div className="text-center py-20">Doctor not found!</div>;

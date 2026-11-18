@@ -32,9 +32,6 @@ export function BookModal({ doctor }) {
   // doctor information
   const { name } = doctor;
 
-  // date
-  // const [BookingDate, setBookingDate] = useState(null);
-
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -54,11 +51,15 @@ export function BookModal({ doctor }) {
     // Add userId
     bookingData.userId = user?.id;
 
+    const { data: tokenData } = await authClient.token();
+    //console.log(tokenData.token);
+
     //post data to the server
     const res = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/booking`, {
       method: "POST",
       headers: {
         "content-type": "application/json",
+        authorization: `Bearer ${tokenData?.token}`,
       },
       body: JSON.stringify(bookingData),
     });

@@ -1,6 +1,7 @@
 "use client";
 
 import { revalidateBooking } from "@/lib/actions";
+import { authClient } from "@/lib/auth-client";
 import { Clock } from "@gravity-ui/icons";
 import {
   Button,
@@ -27,26 +28,32 @@ export function UpdateModal({ booking }) {
     const formData = new FormData(e.currentTarget);
     const UpdatedbookingData = Object.fromEntries(formData.entries());
 
-    // Add userId
     UpdatedbookingData.userId = booking.userId;
-
-    // Convert date string to Date Object
     UpdatedbookingData.date = new Date(UpdatedbookingData.date);
 
-    //post data to the server
-    const res = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/booking`, {
-      method: "PATCH",
-      headers: {
-        "Content-Type": "application/json",
+    const { data: tokenData } = await authClient.token();
+
+    const res = await fetch(
+      `${process.env.NEXT_PUBLIC_SERVER_URL}/booking/${booking._id}`,
+      {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+          authorization: `Bearer ${tokenData?.token}`,
+        },
+        body: JSON.stringify(UpdatedbookingData),
       },
-      body: JSON.stringify(UpdatedbookingData),
-    });
+    );
+
     const result = await res.json();
 
-    await revalidateBooking();
-
-    toast.success("Appoinment Updated successfully");
-    modalState.setOpen(false);
+    if (result.modifiedCount > 0) {
+      await revalidateBooking();
+      toast.success("Appointment updated successfully");
+      modalState.setOpen(false);
+    } else {
+      toast.error("Appointment was not updated");
+    }
   };
 
   return (

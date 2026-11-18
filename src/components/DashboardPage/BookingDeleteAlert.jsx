@@ -1,18 +1,21 @@
 "use client";
 
 import { revalidateBooking } from "@/lib/actions";
+import { authClient } from "@/lib/auth-client";
 import { AlertDialog, Button } from "@heroui/react";
 import toast from "react-hot-toast";
 import { FaDeleteLeft } from "react-icons/fa6";
 
 export function BookingDeleteAlert({ bookingId }) {
   const handleCancelBooking = async () => {
+    const { data: tokenData } = await authClient.token();
     const res = await fetch(
       `${process.env.NEXT_PUBLIC_SERVER_URL}/booking/${bookingId}`,
       {
         method: "DELETE",
         headers: {
           "content-type": "application/json",
+          authorization: `Bearer ${tokenData?.token}`,
         },
       },
     );

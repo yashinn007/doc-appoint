@@ -1,10 +1,29 @@
 import { BookingDeleteAlert } from "@/components/DashboardPage/BookingDeleteAlert";
 import { UpdateModal } from "@/components/DashboardPage/UpdateModal";
+import { auth } from "@/lib/auth";
 import { getBookingData } from "@/lib/data";
+import { headers } from "next/headers";
+import { redirect } from "next/navigation";
 import { FaUser, FaCalendarAlt, FaClock, FaPen } from "react-icons/fa";
 
 const MyBookingsPage = async () => {
-  const BookingsData = await getBookingData();
+  // Get User Session
+  const session = await auth.api.getSession({
+    headers: await headers(),
+  });
+
+  if (!session?.user) {
+    redirect("/login");
+  }
+
+  const userId = session.user.id;
+
+  //get jwt token in (server component)
+  const { token } = await auth.api.getToken({
+    headers: await headers(),
+  });
+
+  const BookingsData = await getBookingData(userId, token);
 
   if (BookingsData.length == 0) {
     return (
@@ -54,7 +73,7 @@ const MyBookingsPage = async () => {
                 )}
               </p>
 
-              <p>Reason: {booking.reason}</p>
+              <p>Message: {booking.message}</p>
             </div>
 
             {/* Action Buttons */}
