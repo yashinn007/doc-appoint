@@ -7,6 +7,8 @@ import {
   Button,
   Calendar,
   DateField,
+  FieldError,
+  Form,
   Input,
   Label,
   ListBox,
@@ -16,10 +18,13 @@ import {
   TextField,
   TimeField,
   Select,
+  useOverlayState,
 } from "@heroui/react";
 import toast from "react-hot-toast";
 
 export function BookModal({ doctor }) {
+  const modalState = useOverlayState();
+
   // User Data
   const { data: session, isPending } = authClient.useSession();
   const user = session?.user;
@@ -62,10 +67,11 @@ export function BookModal({ doctor }) {
     await revalidateBooking();
 
     toast.success("You booked successfully");
+    modalState.setOpen(false);
   };
 
   return (
-    <Modal>
+    <Modal state={modalState}>
       <Button
         disabled={isPending}
         className="px-7 py-3 rounded-lg bg-[#069c6e] hover:bg-[#047f5a] text-white font-semibold transition duration-300"
@@ -89,7 +95,11 @@ export function BookModal({ doctor }) {
             </Modal.Header>
             <Modal.Body className="p-1 md:p-3 lg:p-6">
               <Surface variant="default">
-                <form onSubmit={handleSubmit} className="flex flex-col gap-4">
+                <Form
+                  onSubmit={handleSubmit}
+                  className="flex flex-col gap-4"
+                  render={(props) => <form {...props} />}
+                >
                   {/* user email */}
                   <TextField
                     className="w-full"
@@ -119,22 +129,29 @@ export function BookModal({ doctor }) {
                     name="patientName"
                     type="text"
                     variant="secondary"
+                    validate={(value) =>
+                      value.trim() ? null : "Patient name is required."
+                    }
                   >
                     <Label>Patient Name</Label>
                     <Input placeholder="Enter patient name" />
+                    <FieldError />
                   </TextField>
                   <div className="grid grid-cols-2 gap-x-2 gap-y-4">
                     {/* gender */}
                     <Select
                       isRequired
+                      name="gender"
                       placeholder="Select one"
                       variant="secondary"
+                      validate={(value) => (value ? null : "Select a gender.")}
                     >
                       <Label>Gender</Label>
                       <Select.Trigger>
                         <Select.Value />
                         <Select.Indicator />
                       </Select.Trigger>
+                      <FieldError />
                       <Select.Popover>
                         <ListBox>
                           <ListBox.Item id="male" textValue="Male">
@@ -159,12 +176,23 @@ export function BookModal({ doctor }) {
                       name="phone"
                       type="tel"
                       variant="secondary"
+                      validate={(value) =>
+                        value.trim() ? null : "Phone number is required."
+                      }
                     >
                       <Label>Phone</Label>
                       <Input placeholder="01XXXXXXXXX" />
+                      <FieldError />
                     </TextField>
                     {/* date */}
-                    <DateField isRequired name="date" variant="secondary">
+                    <DateField
+                      isRequired
+                      name="date"
+                      variant="secondary"
+                      validate={(value) =>
+                        value ? null : "Please select a date."
+                      }
+                    >
                       <Label>Date</Label>
                       <DateField.Group>
                         <DateField.Input>
@@ -174,9 +202,17 @@ export function BookModal({ doctor }) {
                           <Calendar className="size-4 text-muted" />
                         </DateField.Suffix>
                       </DateField.Group>
+                      <FieldError />
                     </DateField>
                     {/* time */}
-                    <TimeField isRequired name="time" variant="secondary">
+                    <TimeField
+                      isRequired
+                      name="time"
+                      variant="secondary"
+                      validate={(value) =>
+                        value ? null : "Please select a time."
+                      }
+                    >
                       <Label>Time</Label>
                       <TimeField.Group>
                         <TimeField.Input>
@@ -186,6 +222,7 @@ export function BookModal({ doctor }) {
                           <Clock className="size-4 text-muted" />
                         </TimeField.Suffix>
                       </TimeField.Group>
+                      <FieldError />
                     </TimeField>
                   </div>
                   {/* descroption */}
@@ -204,12 +241,11 @@ export function BookModal({ doctor }) {
                     <Button
                       type="submit"
                       className="bg-[#069c6e] hover:bg-[#047f5a] text-white"
-                      slot="close"
                     >
                       Book
                     </Button>
                   </Modal.Footer>
-                </form>
+                </Form>
               </Surface>
             </Modal.Body>
           </Modal.Dialog>

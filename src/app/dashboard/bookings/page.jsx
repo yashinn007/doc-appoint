@@ -1,4 +1,5 @@
 import { BookingDeleteAlert } from "@/components/DashboardPage/BookingDeleteAlert";
+import { UpdateModal } from "@/components/DashboardPage/UpdateModal";
 import { getBookingData } from "@/lib/data";
 import { FaUser, FaCalendarAlt, FaClock, FaPen } from "react-icons/fa";
 
@@ -58,10 +59,11 @@ const MyBookingsPage = async () => {
 
             {/* Action Buttons */}
             <div className="mt-4 flex items-center gap-2">
-              <button className="flex items-center gap-2 rounded-full border border-gray-200 bg-gray-50 px-3 py-2 text-sm font-medium text-gray-700 hover:bg-gray-100">
+              {/* <button className="flex items-center gap-2 rounded-full border border-gray-200 bg-gray-50 px-3 py-2 text-sm font-medium text-gray-700 hover:bg-gray-100">
                 <FaPen size={12} />
                 Update
-              </button>
+              </button> */}
+              <UpdateModal booking={booking}></UpdateModal>
 
               <BookingDeleteAlert bookingId={booking._id}></BookingDeleteAlert>
             </div>
