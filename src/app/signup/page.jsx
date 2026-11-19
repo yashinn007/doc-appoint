@@ -21,8 +21,6 @@ const SignupPage = () => {
     const formData = new FormData(e.currentTarget);
     const userData = Object.fromEntries(formData.entries());
 
-    console.log(userData);
-
     const { data, error } = await authClient.signUp.email({
       name: userData.name,
       email: userData.email,
@@ -35,7 +33,14 @@ const SignupPage = () => {
       redirect("/");
     }
     if (error) {
-      toast.error(" Something went wrong!");
+      if (
+        error.message === "User already exists. Use another email." ||
+        error.code === "USER_ALREADY_EXISTS"
+      ) {
+        toast.error("This email is already registered. Please login!");
+      } else {
+        toast.error("Something went wrong!");
+      }
     }
   };
   return (

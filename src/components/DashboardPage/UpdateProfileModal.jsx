@@ -20,8 +20,6 @@ const UpdateProfileModal = ({ user }) => {
     const name = e.target.name.value;
     const image = e.target.image.value;
 
-    console.log(name, image);
-
     //update user from better-auth docs
     const { data, error } = await authClient.updateUser({
       image: image,
