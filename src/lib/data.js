@@ -7,6 +7,10 @@ export const getAllAppointmentData = async () => {
       },
     },
   );
+
+  if (!res.ok) {
+    throw new Error(`Failed to fetch appointments: ${res.status}`);
+  }
   const data = await res.json();
   return data;
 };
