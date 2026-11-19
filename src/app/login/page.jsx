@@ -11,11 +11,10 @@ import {
   TextField,
 } from "@heroui/react";
 import Link from "next/link";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useSearchParams } from "next/navigation";
 import toast from "react-hot-toast";
 
 const LoginPage = () => {
-  const router = useRouter();
   const searchParams = useSearchParams();
 
   const callbackUrl = searchParams.get("callbackUrl") || "/";
@@ -48,8 +47,7 @@ const LoginPage = () => {
             ? targetUrl.pathname + targetUrl.search + targetUrl.hash
             : "/";
 
-        router.replace(safeCallbackUrl);
-        router.refresh();
+        window.location.replace(safeCallbackUrl);
       }
     } catch (error) {
       toast.error("Something went wrong!");
