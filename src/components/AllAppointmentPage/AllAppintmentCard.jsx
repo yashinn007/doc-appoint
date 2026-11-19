@@ -25,6 +25,7 @@ const AllAppintmentCard = ({ doctor }) => {
             alt={name}
             height={800}
             width={800}
+            loading="eager"
             className="w-full max-h-65 rounded-t-lg object-cover "
           ></Image>
           <span className="flex items-center justify-center gap-1 px-1 py-0.2 bg-white dark:bg-[#01251b]  border w-13 rounded-full absolute top-2 right-2 z-10 text-sm">
