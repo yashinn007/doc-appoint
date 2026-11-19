@@ -49,6 +49,7 @@ const LoginPage = () => {
             : "/";
 
         router.replace(safeCallbackUrl);
+        router.refresh();
       }
     } catch (error) {
       toast.error("Something went wrong!");
