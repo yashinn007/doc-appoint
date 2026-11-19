@@ -40,11 +40,6 @@ export function DropdownProfile({ user }) {
           </div>
         </div>
         <Dropdown.Menu>
-          <Dropdown.Item id="profile" textValue="Profile">
-            <Link href={"/profile"}>
-              <Label>Profile</Label>
-            </Link>
-          </Dropdown.Item>
           <Dropdown.Item id="logout" textValue="Logout" variant="danger">
             <div
               onClick={handelSignOut}
