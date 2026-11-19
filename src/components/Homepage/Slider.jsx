@@ -19,7 +19,7 @@ const Slider = () => {
 
   if (!isMounted) {
     return (
-      <div>
+      <div className="h-auto">
         <Image
           src={banner1}
           alt="Featured appointment service"
