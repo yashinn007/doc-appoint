@@ -13,6 +13,7 @@ import {
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 import toast from "react-hot-toast";
+import { FcGoogle } from "react-icons/fc";
 
 const LoginPage = () => {
   const searchParams = useSearchParams();
@@ -53,6 +54,12 @@ const LoginPage = () => {
       toast.error("Something went wrong!");
       console.error(error);
     }
+  };
+
+  const handelGoogleSignIn = async () => {
+    const data = await authClient.signIn.social({
+      provider: "google",
+    });
   };
 
   return (
@@ -110,6 +117,13 @@ const LoginPage = () => {
             </Button>
           </div>
         </Form>
+        <p className="text-center text-gray-500 my-4">or</p>
+        <Button
+          onClick={handelGoogleSignIn}
+          className="w-full border border-[#069c6e] bg-[#ddf7f2] text-black"
+        >
+          <FcGoogle /> Continue with Google
+        </Button>
         <p className="text-gray-500 text-xs text-center mt-3">
           Do not have an account?{" "}
           <Link href={"/signup"}>
