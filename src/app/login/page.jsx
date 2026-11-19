@@ -11,10 +11,15 @@ import {
   TextField,
 } from "@heroui/react";
 import Link from "next/link";
-import { redirect } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import toast from "react-hot-toast";
 
 const LoginPage = () => {
+  const router = useRouter();
+  const searchParams = useSearchParams();
+
+  const callbackUrl = searchParams.get("callbackUrl") || "/";
+
   const handelLoginForm = async (e) => {
     e.preventDefault();
 
@@ -27,14 +32,25 @@ const LoginPage = () => {
       rememberMe: true,
     });
 
-    if (data) {
-      toast.success(" Login Successfull");
-      redirect("/");
-    }
     if (error) {
-      toast.error(" Something went wrong!");
+      toast.error("Something went wrong!");
+      return;
+    }
+
+    if (data) {
+      toast.success("Login Successful");
+
+      // Prevent external redirects
+      const safeCallbackUrl =
+        callbackUrl.startsWith("/") && !callbackUrl.startsWith("//")
+          ? callbackUrl
+          : "/";
+
+      router.replace(safeCallbackUrl);
+      router.refresh();
     }
   };
+
   return (
     <div className="container mx-auto min-h-[80vh] flex justify-start flex-col items-center px-3 sm:px-4 lg:px-0 py-10 lg:py-16">
       <h2 className="text-3xl font-bold mb-7">Login</h2>
