@@ -26,28 +26,33 @@ const LoginPage = () => {
     const formData = new FormData(e.currentTarget);
     const userData = Object.fromEntries(formData.entries());
 
-    const { data, error } = await authClient.signIn.email({
-      email: userData.email,
-      password: userData.password,
-      rememberMe: true,
-    });
+    try {
+      const { data, error } = await authClient.signIn.email({
+        email: userData.email,
+        password: userData.password,
+        rememberMe: true,
+      });
 
-    if (error) {
+      if (error) {
+        toast.error(error.message || "Login failed!");
+        return;
+      }
+
+      if (data) {
+        toast.success("Login Successful");
+
+        const targetUrl = new URL(callbackUrl, window.location.origin);
+
+        const safeCallbackUrl =
+          targetUrl.origin === window.location.origin
+            ? targetUrl.pathname + targetUrl.search + targetUrl.hash
+            : "/";
+
+        router.replace(safeCallbackUrl);
+      }
+    } catch (error) {
       toast.error("Something went wrong!");
-      return;
-    }
-
-    if (data) {
-      toast.success("Login Successful");
-
-      // Prevent external redirects
-      const safeCallbackUrl =
-        callbackUrl.startsWith("/") && !callbackUrl.startsWith("//")
-          ? callbackUrl
-          : "/";
-
-      router.replace(safeCallbackUrl);
-      router.refresh();
+      console.error(error);
     }
   };
 
@@ -79,7 +84,7 @@ const LoginPage = () => {
           </TextField>
           <TextField
             isRequired
-            minLength={8}
+            minLength={6}
             name="password"
             type="password"
             validate={(value) => {
