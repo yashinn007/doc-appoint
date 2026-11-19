@@ -50,7 +50,7 @@ const SignupPage = () => {
         {/* form */}
         <Form
           onSubmit={handelSignupForm}
-          className="flex w-96 flex-col gap-4 "
+          className="flex w-[80vw] md:w-96 flex-col gap-4 "
           render={(props) => <form {...props} data-custom="foo" />}
         >
           {/* name */}

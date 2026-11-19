@@ -62,7 +62,7 @@ const LoginPage = () => {
         {/* form */}
         <Form
           onSubmit={handelLoginForm}
-          className="flex w-96 flex-col gap-4 "
+          className="flex w-[80vw] md:w-96 flex-col gap-4 "
           render={(props) => <form {...props} data-custom="foo" />}
         >
           {/* email */}
