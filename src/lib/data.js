@@ -11,22 +11,42 @@ export const getTopRatedData = async () => {
   return data;
 };
 
-export const getAllAppointmentData = async () => {
-  const res = await fetch(
-    `${process.env.NEXT_PUBLIC_SERVER_URL}/all-appointment`,
-    {
-      next: {
-        revalidate: 120,
-      },
+export const getAllAppointmentData = async (search = "") => {
+  const url = new URL(`${process.env.NEXT_PUBLIC_SERVER_URL}/all-appointment`);
+
+  if (search) {
+    url.searchParams.set("search", search);
+  }
+
+  const res = await fetch(url.toString(), {
+    next: {
+      revalidate: 120,
     },
-  );
+  });
 
   if (!res.ok) {
     throw new Error(`Failed to fetch appointments: ${res.status}`);
   }
-  const data = await res.json();
-  return data;
+
+  return res.json();
 };
+
+// export const getAllAppointmentData = async () => {
+//   const res = await fetch(
+//     `${process.env.NEXT_PUBLIC_SERVER_URL}/all-appointment`,
+//     {
+//       next: {
+//         revalidate: 120,
+//       },
+//     },
+//   );
+
+//   if (!res.ok) {
+//     throw new Error(`Failed to fetch appointments: ${res.status}`);
+//   }
+//   const data = await res.json();
+//   return data;
+// };
 
 export const getSingleAppointmentData = async (id, token) => {
   "use cache";
