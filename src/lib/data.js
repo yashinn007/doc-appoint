@@ -31,23 +31,6 @@ export const getAllAppointmentData = async (search = "") => {
   return res.json();
 };
 
-// export const getAllAppointmentData = async () => {
-//   const res = await fetch(
-//     `${process.env.NEXT_PUBLIC_SERVER_URL}/all-appointment`,
-//     {
-//       next: {
-//         revalidate: 120,
-//       },
-//     },
-//   );
-
-//   if (!res.ok) {
-//     throw new Error(`Failed to fetch appointments: ${res.status}`);
-//   }
-//   const data = await res.json();
-//   return data;
-// };
-
 export const getSingleAppointmentData = async (id, token) => {
   "use cache";
   const res = await fetch(
